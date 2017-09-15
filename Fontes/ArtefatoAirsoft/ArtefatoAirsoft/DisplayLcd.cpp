@@ -4,19 +4,30 @@
 
 #include "DisplayLcd.h"
 
-const int pinoRS = 8;
-const int pinoEnable = 9;
-const int pinoD4 = 4;
-const int pinoD5 = 5;
-const int pinoD6 = 6;
-const int pinoD7 = 7;
 
-DisplayLcd::DisplayLcd() : 
-	LiquidCrystal(pinoRS, pinoEnable, pinoD4, pinoD5, pinoD6, pinoD7)
+DisplayLcd::DisplayLcd() :
+	LiquidCrystal(PIN_RS, PIN_ENABLE, PIN_D4, PIN_D5, PIN_D6, PIN_D7)
 {
 }
 
-
-void DisplayLcd::Escrever(String dado)
+void DisplayLcd::begin()
 {
+	LiquidCrystal::begin(NUM_COLUMNS, NUM_ROWS);
 }
+
+void DisplayLcd::reset()
+{
+	LiquidCrystal::clear();
+	this->setCursorUp();
+}
+
+void DisplayLcd::setCursorUp()
+{
+	LiquidCrystal::setCursor(LINE_BEGIN, LINE_UP);
+}
+
+void DisplayLcd::setCursorDown()
+{
+	LiquidCrystal::setCursor(LINE_BEGIN, LINE_DOWN);
+}
+

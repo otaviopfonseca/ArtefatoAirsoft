@@ -87,10 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DisplayLcd.h" />
+    <ClInclude Include="DisplayLcdKeypad.h" />
     <ClInclude Include="__vm\.ArtefatoAirsoft.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayLcd.cpp" />
+    <ClCompile Include="DisplayLcdKeypad.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

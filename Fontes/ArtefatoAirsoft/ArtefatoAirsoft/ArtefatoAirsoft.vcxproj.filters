@@ -24,9 +24,15 @@
     <ClInclude Include="DisplayLcd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DisplayLcdKeypad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayLcd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayLcdKeypad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
