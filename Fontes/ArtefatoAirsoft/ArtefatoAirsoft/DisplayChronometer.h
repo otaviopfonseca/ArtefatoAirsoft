@@ -22,6 +22,7 @@ public:
 	DisplayChronometer(int);
 	void begin();
 	void writeTest();
+	void start();
 
 private: //methods
 	void turnBuzzerOn();
@@ -30,14 +31,16 @@ private: //methods
 
 private: //properties
 	int digitalBuzzerOutput = 0;
-	int  firstnum = 0;
-	int  secondnum = 0;
-	int  thirdnum = 0;
-	int  fournum = 0;
-	int  fivenum = 0;
-	int  sixnum = 0;
-	int  sevennum = 0;
-	int  eightnum = 0;
+	int firstnum = 0;
+	int secondnum = 0;
+	int thirdnum = 0;
+	int fournum = 0;
+	int fivenum = 0;
+	int sixnum = 0;
+	int sevennum = 0;
+	int eightnum = 0;
+
+	long int countnumber = 24001000;
 };
 
 #endif
