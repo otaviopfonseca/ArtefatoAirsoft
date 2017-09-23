@@ -27,12 +27,30 @@
     <ClInclude Include="DisplayLcdKeypad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DisplayChronometer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CountUpDownTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CountDown.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayLcd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DisplayLcdKeypad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayChronometer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CountUpDownTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CountDown.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

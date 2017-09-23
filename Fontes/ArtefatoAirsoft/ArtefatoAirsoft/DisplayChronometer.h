@@ -10,6 +10,7 @@
 #endif
 
 #include<LedControl.h>
+#include "CountDown.h"
 
 const int PIN_CLK = 11;
 const int PIN_DIN = 13;
@@ -23,24 +24,23 @@ public:
 	void begin();
 	void writeTest();
 	void start();
+	void start(int, int);
+	void setStartTime(int, int);
+	void reset();
 
 private: //methods
 	void turnBuzzerOn();
 	void turnBuzzerOff();
-
+	void tickBuzzer();
+	void printCurrentTime();
+	String getTimeString(int, int, int);
+	long calculateMiliseconds(int, int);
+	void fillDigits(String);
 
 private: //properties
-	int digitalBuzzerOutput = 0;
-	int firstnum = 0;
-	int secondnum = 0;
-	int thirdnum = 0;
-	int fournum = 0;
-	int fivenum = 0;
-	int sixnum = 0;
-	int sevennum = 0;
-	int eightnum = 0;
-
-	long int countnumber = 24001000;
+	CountDown timer;
+	int digitalBuzzerOutput;
+	long initialTimeMilis;
 };
 
 #endif

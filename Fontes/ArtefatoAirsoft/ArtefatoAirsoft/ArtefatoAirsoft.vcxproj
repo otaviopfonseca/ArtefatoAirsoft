@@ -86,12 +86,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CountDown.h" />
+    <ClInclude Include="CountUpDownTimer.h" />
     <ClInclude Include="DisplayChronometer.h" />
     <ClInclude Include="DisplayLcd.h" />
     <ClInclude Include="DisplayLcdKeypad.h" />
     <ClInclude Include="__vm\.ArtefatoAirsoft.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CountDown.cpp" />
+    <ClCompile Include="CountUpDownTimer.cpp" />
     <ClCompile Include="DisplayChronometer.cpp" />
     <ClCompile Include="DisplayLcd.cpp" />
     <ClCompile Include="DisplayLcdKeypad.cpp" />
