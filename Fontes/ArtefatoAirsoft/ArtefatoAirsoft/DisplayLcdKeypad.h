@@ -27,6 +27,7 @@ public:
 	DisplayLcdButton getKeyPressed();
 	String getKeyPressedDescription();
 	String getKeyPressedDescription(DisplayLcdButton);
+	DisplayLcdButton waitForKey();
 
 private:
 	DisplayLcdButton readLcdButtons();

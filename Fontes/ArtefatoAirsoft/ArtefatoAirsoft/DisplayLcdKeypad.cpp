@@ -36,16 +36,17 @@ String DisplayLcdKeypad::getKeyPressedDescription(DisplayLcdButton keyPressed)
 	};
 }
 
-
+DisplayLcdButton DisplayLcdKeypad::waitForKey()
+{
+	DisplayLcdButton keyPressed = DisplayLcdButton::None;
+	while ((keyPressed = getKeyPressed()) == DisplayLcdButton::None);
+	return keyPressed;
+}
 
 DisplayLcdButton DisplayLcdKeypad::readLcdButtons()
 {
-	int analogReadValue = analogRead(ANALOG_BUTTON_READ_PIN);
-	String analogReadValueStr = String(analogReadValue);
-	String showtext = String("Valor lido analogico = ");
-	showtext.concat(analogReadValueStr);
-	Serial.println(showtext);
-	delay(5); 
+	int analogReadValue = analogRead(ANALOG_BUTTON_READ_PIN);	
+	delay(40); 
 	int k = (analogRead(ANALOG_BUTTON_READ_PIN) - analogReadValue);	
 	if (5 < abs(k)) return DisplayLcdButton::None;									 
 	if (analogReadValue > 1000) return DisplayLcdButton::None; 

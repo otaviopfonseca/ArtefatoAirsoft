@@ -76,7 +76,7 @@ void DisplayChronometer::turnBuzzerOff()
 void DisplayChronometer::tickBuzzer()
 {
 	turnBuzzerOn();
-	delay(100);
+	delay(50);
 	turnBuzzerOff();
 }
 

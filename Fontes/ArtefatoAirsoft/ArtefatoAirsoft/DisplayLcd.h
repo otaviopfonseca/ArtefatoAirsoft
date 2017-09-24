@@ -38,6 +38,7 @@ public: //Métodos
 	void reset();
 	void setCursorUp();
 	void setCursorDown();
+	void checkArrows(byte, byte);
 };
 
 #endif
