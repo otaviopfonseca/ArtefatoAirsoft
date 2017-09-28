@@ -18,6 +18,7 @@ private:
 	DisplayLcdKeypad& displayKeypad;
 	DisplayLcd& displayLcd;
 	int buzzerPin;
+	AirsoftGame getGameByIndex(int);
 
 public:
 	MainMenu(int, DisplayLcdKeypad&, DisplayLcd&);

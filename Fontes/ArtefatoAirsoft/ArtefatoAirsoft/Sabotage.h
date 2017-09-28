@@ -12,7 +12,8 @@
 
 class Sabotage : public AirsoftGame
 {
-
+public:
+	Sabotage(int, DisplayLcd&, DisplayLcdKeypad&);
 };
 
 #endif

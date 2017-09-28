@@ -15,7 +15,7 @@ class SearchAndDestroy : public AirsoftGame
 {
 
 public:
-	SearchAndDestroy();
+	SearchAndDestroy(int, DisplayLcd&, DisplayLcdKeypad&);
 };
 
 #endif

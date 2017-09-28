@@ -29,10 +29,15 @@ void setup()
 {		
 	Serial.begin(9600);
 	lcd.begin();
+	lcd.print("ARTEFATO AIRSOFT");
+	lcd.setCursor(0, 1);
+	lcd.print("BY OTAVIO FONSECA");
+	delay(2000);
 }
 
 // the loop function runs over and over again until power down or reset
 void loop() 
 {
-	startupMenu.getSelectedGame();
+	AirsoftGame game = startupMenu.getSelectedGame();
+	game.configGame();
 }

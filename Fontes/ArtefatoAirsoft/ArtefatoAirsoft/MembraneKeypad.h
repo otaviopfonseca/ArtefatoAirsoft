@@ -19,6 +19,8 @@ class MembraneKeypad : public Keypad
 public:
 	MembraneKeypad();
 	void begin(void(*listener)(char));
+	int getRealNumber();
+	char getKeyPressed();
 
 };
 #endif

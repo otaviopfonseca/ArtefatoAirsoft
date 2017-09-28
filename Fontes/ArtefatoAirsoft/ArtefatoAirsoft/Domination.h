@@ -11,7 +11,8 @@
 #include "AirsoftGame.h"
 
 class Domination : public AirsoftGame {
-
+public:
+	Domination(int, DisplayLcd&, DisplayLcdKeypad&);
 };
 
 #endif
