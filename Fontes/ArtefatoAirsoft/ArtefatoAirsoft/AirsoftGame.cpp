@@ -5,6 +5,7 @@
 #include "AirsoftGame.h"
 
 const unsigned int PASSWORD_SIZE = 8;
+const unsigned int CONTAGEM_REGRESSIVA_INICIO = 5;
 
 AirsoftGame::AirsoftGame(int _buzzerPin, DisplayLcd & _display, DisplayLcdKeypad & _displayKeyboard) 
 	: display(_display), keypad(_displayKeyboard)
@@ -29,6 +30,29 @@ void AirsoftGame::configGame()
 	configMosfet();
 	display.reset();
 	configPassword();
+	display.reset();
+	startGameCountdown();
+}
+
+void AirsoftGame::startGameCountdown()
+{	
+	display.reset();
+	display.setCursor(1, 0);
+	display.print("PRONTO P/ INICIAR");
+	display.setCursorDown();
+	display.print("PRES. ALGUM BOTAO");
+	mainKeypad.waitForKey();
+	display.reset();
+	display.setCursor(1, 0);
+	display.print("INICIANDO JOGO");
+	for (int i = CONTAGEM_REGRESSIVA_INICIO; i > 0; i--) { 
+		display.setCursor(5, 1);
+		beep();
+		display.print("EM ");
+		display.print(i);
+		delay(1000);
+	}
+	display.reset();
 }
 
 void AirsoftGame::configGameTime()

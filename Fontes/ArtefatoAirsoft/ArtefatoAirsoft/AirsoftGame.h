@@ -37,6 +37,8 @@ protected:
 public:
 	AirsoftGame(int, DisplayLcd&, DisplayLcdKeypad&);
 	void configGame();
+	void startGameCountdown();
+	//void startGame();
 
 private:
 	void configGameTime();
