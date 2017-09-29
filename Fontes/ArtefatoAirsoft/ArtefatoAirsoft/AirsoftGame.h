@@ -21,6 +21,9 @@ protected:
 	int gameMinutes;
 	int bombMinutes;
 	int activateSeconds;
+	bool soundEnable;
+	bool mosfetEnable;
+	bool usePassword;
 	CountDown gameTimer;
 	CountDown bombTimer;
 	DisplayChronometer mainChronometer;
@@ -28,6 +31,8 @@ protected:
 	DisplayLcd& display;
 	DisplayLcdKeypad& keypad;
 	int buzzerPin;
+	String password;
+	String passwordMirror;
 	
 public:
 	AirsoftGame(int, DisplayLcd&, DisplayLcdKeypad&);
@@ -35,7 +40,17 @@ public:
 
 private:
 	void configGameTime();
+	void configBombTime();
+	void configActivateTime();
+	void configSound();
+	void configMosfet();
+	void configPassword();
+	void setNewPass();
+	void setPass();
+	void setCode();
 	void beep();
+	bool comparePassword();
+	
 
 };
 

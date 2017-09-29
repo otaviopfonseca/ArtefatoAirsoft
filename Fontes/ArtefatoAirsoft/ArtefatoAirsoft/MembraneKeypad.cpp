@@ -14,10 +14,12 @@ char KEYS[ROWS_MEMBRANE][COLUMNS_MEMBRANE] =
 	{ '*', '0', '#', 'D' }
 };
 
+const int KEYPAD_ENABLE_PIN = 3;
+
 MembraneKeypad::MembraneKeypad() : 
 	Keypad(makeKeymap(KEYS), ROW_PINS, COL_PINS, ROWS_MEMBRANE, COLUMNS_MEMBRANE)
 {
-	
+	pinMode(KEYPAD_ENABLE_PIN, INPUT);
 }
 
 void MembraneKeypad::begin(void(*listener)(char))
@@ -28,9 +30,10 @@ void MembraneKeypad::begin(void(*listener)(char))
 }
 
 int MembraneKeypad::getRealNumber()
-{
+{	
 	char keyPressed = '\0';
-	while (1) 
+	
+	while (true) 
 	{
 		keyPressed = getKeyPressed();
 		if (keyPressed) 
@@ -56,5 +59,12 @@ int MembraneKeypad::getRealNumber()
 
 char MembraneKeypad::getKeyPressed()
 {
+	if (!checkEnable())
+		return '\0';
 	return this->waitForKey();
+}
+
+bool MembraneKeypad::checkEnable()
+{	
+	return digitalRead(KEYPAD_ENABLE_PIN) == HIGH;
 }

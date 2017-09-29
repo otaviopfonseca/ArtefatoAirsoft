@@ -7,7 +7,7 @@
 #include "SearchAndDestroy.h"
 #include "Sabotage.h"
 
-const String menu[] = { "Proc. e Destruir", "Sabotage", "Dominacao" };
+const String menu[] = { "PROC. E DESTRUIR", "SABOTAGEM", "DOMINACAO" };
 
 MainMenu::MainMenu(int _buzzerPin, DisplayLcdKeypad& _keypad, DisplayLcd& _display)
 	: displayKeypad(_keypad), displayLcd(_display) 
@@ -19,7 +19,7 @@ AirsoftGame MainMenu::getSelectedGame()
 {
 	int gameIndex = 0;
 	displayLcd.reset();
-	displayLcd.print("Sel. Modo de Jogo: ");
+	displayLcd.print("MODO DE JOGO: ");
 	DisplayLcdButton buttonPressed = DisplayLcdButton::None;	
 	delay(2000);
 	displayLcd.reset();	

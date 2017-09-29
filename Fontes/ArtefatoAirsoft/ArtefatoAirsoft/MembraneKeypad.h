@@ -21,6 +21,8 @@ public:
 	void begin(void(*listener)(char));
 	int getRealNumber();
 	char getKeyPressed();
+private:
+	bool checkEnable();
 
 };
 #endif
