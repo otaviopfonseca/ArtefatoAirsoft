@@ -3,6 +3,7 @@
  Created:	9/5/2017 1:39:00 PM
  Author:	DTI-Otavio
 */
+#include "ArmDisarmKeypad.h"
 #include "Domination.h"
 #include "Sabotage.h"
 #include "MainMenu.h"
@@ -38,6 +39,7 @@ void setup()
 // the loop function runs over and over again until power down or reset
 void loop() 
 {
-	AirsoftGame game = startupMenu.getSelectedGame();
-	game.configGame();
+	AirsoftGame* game = startupMenu.getSelectedGame();
+	game->configGame();
+	game->startGame();
 }

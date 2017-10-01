@@ -5,9 +5,83 @@
 #include "AirsoftGame.h"
 
 const unsigned int PASSWORD_SIZE = 8;
-const unsigned int CONTAGEM_REGRESSIVA_INICIO = 5;
+const unsigned int COUNTDOWN_BEGIN = 5;
 
-AirsoftGame::AirsoftGame(int _buzzerPin, DisplayLcd & _display, DisplayLcdKeypad & _displayKeyboard) 
+void AirsoftGame::startGameTimer()
+{
+	gameTimer.start(((long)gameMinutes) * ((long)60) * ((long)1000));
+}
+
+void AirsoftGame::startBombTimer()
+{
+	mainChronometer.setStartTime(bombMinutes, 0);
+	mainChronometer.start();
+}
+
+void AirsoftGame::printGameTimer()
+{
+	long currentMilis = gameTimer.remaining();
+	Serial.println("Milis");
+	Serial.println(currentMilis);
+	long hours = (currentMilis / 6000000);
+	Serial.println("Horas");
+	Serial.println(hours);
+	long minutes = (currentMilis / 60000) % 60;
+	Serial.println("Minutos");
+	Serial.println(minutes);
+	long seconds = (currentMilis / 1000) % 60;
+	Serial.println("Segundos");
+	Serial.println(seconds);
+	Serial.println("Milisegundos");
+	long miliseconds = currentMilis % 1000;
+	Serial.println(miliseconds);
+	if (miliseconds < 100)
+		beep();
+	String timeString = getTimeString(hours, minutes, seconds, miliseconds);
+
+
+	if (gameTimer.remaining() > 0)
+	{
+		display.setCursor(3, 0);
+		display.print("TEMPO DE JOGO");
+		display.setCursor(3, 1);
+		display.print(timeString);
+	}
+}
+
+String AirsoftGame::getTimeString(int hours, int minutes, int seconds, int miliseconds)
+{
+	String strHours = "";
+	if (hours < 10)
+		strHours += "0";
+	strHours += hours;
+
+	String strMinutes = "";
+	if (minutes < 10)
+		strMinutes += "0";
+	strMinutes += minutes;
+
+	String strSeconds = "";
+	if (seconds < 10)
+		strSeconds += "0";
+	strSeconds += seconds;
+
+	String strMilis = "";
+	if (miliseconds < 100)
+		strMilis += "0";
+	if (miliseconds < 10)
+		strMilis += "0";
+	strMilis += miliseconds;
+
+	return strHours + ":" + strMinutes + ":" + strSeconds + "." + strMilis;
+}
+
+void AirsoftGame::printBombTimer()
+{
+	mainChronometer.printCurrentTime();
+}
+
+AirsoftGame::AirsoftGame(int _buzzerPin, DisplayLcd & _display, DisplayLcdKeypad & _displayKeyboard)
 	: display(_display), keypad(_displayKeyboard)
 {
 	gameTimer = CountDown();
@@ -45,7 +119,7 @@ void AirsoftGame::startGameCountdown()
 	display.reset();
 	display.setCursor(1, 0);
 	display.print("INICIANDO JOGO");
-	for (int i = CONTAGEM_REGRESSIVA_INICIO; i > 0; i--) { 
+	for (int i = COUNTDOWN_BEGIN; i > 0; i--) {
 		display.setCursor(5, 1);
 		beep();
 		display.print("EM ");

@@ -13,9 +13,14 @@
 
 class SearchAndDestroy : public AirsoftGame 
 {
+private:
+	void search();
+	void destroy();
 
 public:
 	SearchAndDestroy(int, DisplayLcd&, DisplayLcdKeypad&);
+	// Inherited via AirsoftGame
+	virtual void startGame() override;
 };
 
 #endif

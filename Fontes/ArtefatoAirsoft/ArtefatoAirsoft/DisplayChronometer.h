@@ -27,12 +27,12 @@ public:
 	void start(int, int);
 	void setStartTime(int, int);
 	void reset();
+	void printCurrentTime();
 
 private: //methods
 	void turnBuzzerOn();
 	void turnBuzzerOff();
 	void tickBuzzer();
-	void printCurrentTime();
 	String getTimeString(int, int, int);
 	long calculateMiliseconds(int, int);
 	void fillDigits(String);

@@ -8,3 +8,7 @@ Sabotage::Sabotage(int buzzerPin, DisplayLcd& _display, DisplayLcdKeypad& _keypa
 	AirsoftGame(buzzerPin, _display, _keypad)
 {
 }
+
+void Sabotage::startGame()
+{
+}

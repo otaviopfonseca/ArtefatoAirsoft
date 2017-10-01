@@ -18,11 +18,11 @@ private:
 	DisplayLcdKeypad& displayKeypad;
 	DisplayLcd& displayLcd;
 	int buzzerPin;
-	AirsoftGame getGameByIndex(int);
+	AirsoftGame* getGameByIndex(int);
 
 public:
 	MainMenu(int, DisplayLcdKeypad&, DisplayLcd&);
-	AirsoftGame getSelectedGame();
+	AirsoftGame* getSelectedGame();
 };
 
 #endif

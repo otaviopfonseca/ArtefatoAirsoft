@@ -13,6 +13,9 @@
 class Domination : public AirsoftGame {
 public:
 	Domination(int, DisplayLcd&, DisplayLcdKeypad&);
+
+	// Inherited via AirsoftGame
+	virtual void startGame() override;
 };
 
 #endif

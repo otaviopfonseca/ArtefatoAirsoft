@@ -9,3 +9,7 @@ Domination::Domination(int buzzerPin, DisplayLcd& _display, DisplayLcdKeypad& _d
 {
 
 }
+
+void Domination::startGame()
+{
+}

@@ -33,12 +33,15 @@ protected:
 	int buzzerPin;
 	String password;
 	String passwordMirror;
+	void startGameTimer();
+	void startBombTimer();
+	void printGameTimer();
+	void printBombTimer();
 	
 public:
 	AirsoftGame(int, DisplayLcd&, DisplayLcdKeypad&);
 	void configGame();
-	void startGameCountdown();
-	//void startGame();
+	virtual void startGame() = 0;
 
 private:
 	void configGameTime();
@@ -52,8 +55,8 @@ private:
 	void setCode();
 	void beep();
 	bool comparePassword();
-	
-
+	String getTimeString(int hours, int minutes, int seconds, int miliseconds);
+	void startGameCountdown();	
 };
 
 #endif

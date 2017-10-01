@@ -6,6 +6,7 @@
 #include "AirsoftGame.h"
 #include "SearchAndDestroy.h"
 #include "Sabotage.h"
+#include "Domination.h"
 
 const String menu[] = { "PROC. E DESTRUIR", "SABOTAGEM", "DOMINACAO" };
 
@@ -15,7 +16,7 @@ MainMenu::MainMenu(int _buzzerPin, DisplayLcdKeypad& _keypad, DisplayLcd& _displ
 	buzzerPin = _buzzerPin;
 }
 
-AirsoftGame MainMenu::getSelectedGame()
+AirsoftGame* MainMenu::getSelectedGame()
 {
 	int gameIndex = 0;
 	displayLcd.reset();
@@ -53,21 +54,21 @@ AirsoftGame MainMenu::getSelectedGame()
 			return getGameByIndex(gameIndex);
 		}
 	}
-	return AirsoftGame(buzzerPin, displayLcd, displayKeypad);
+	return new SearchAndDestroy(buzzerPin, displayLcd, displayKeypad);
 }
 
-AirsoftGame MainMenu::getGameByIndex(int gameIndex)
+AirsoftGame* MainMenu::getGameByIndex(int gameIndex)
 {
-	/*switch (gameIndex)
+	switch (gameIndex)
 	{
 		case 0:
-			return SearchAndDestroy();
+			return new SearchAndDestroy(buzzerPin, displayLcd, displayKeypad);
 		case 1: 
-			return Sabotage();
+			return new Sabotage(buzzerPin, displayLcd, displayKeypad);
 		case 3:
-			return Domination();
+			return new Domination(buzzerPin, displayLcd, displayKeypad);
 		default:
-			return SearchAndDestroy();
-	}*/
-	return AirsoftGame(buzzerPin, displayLcd, displayKeypad);
+			return new SearchAndDestroy(buzzerPin, displayLcd, displayKeypad);
+	}
+	return new SearchAndDestroy(buzzerPin, displayLcd, displayKeypad);
 }

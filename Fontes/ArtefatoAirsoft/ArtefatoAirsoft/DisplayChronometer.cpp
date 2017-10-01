@@ -83,6 +83,8 @@ void DisplayChronometer::tickBuzzer()
 void DisplayChronometer::printCurrentTime()
 {
 	long currentMilis = timer.remaining();
+	if (currentMilis <= 0)
+		currentMilis = 0;
 	long minutes = (currentMilis / 60000);
 	long seconds = (currentMilis / 1000) % 60;
 	long miliseconds = currentMilis % 1000;

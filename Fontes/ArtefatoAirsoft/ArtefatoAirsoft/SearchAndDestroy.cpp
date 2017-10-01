@@ -8,3 +8,23 @@ SearchAndDestroy::SearchAndDestroy(int _buzzerPin, DisplayLcd& _display, Display
 	: AirsoftGame(_buzzerPin, _display, _displayKeypad)
 {
 }
+
+void SearchAndDestroy::startGame()
+{
+	startGameTimer();
+	search();
+}
+
+
+void SearchAndDestroy::search()
+{
+	display.reset();
+	while (true)
+	{
+		printGameTimer();
+	}
+}
+
+void SearchAndDestroy::destroy()
+{
+}

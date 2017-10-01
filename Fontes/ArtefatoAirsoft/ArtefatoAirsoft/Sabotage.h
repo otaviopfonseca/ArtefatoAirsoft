@@ -14,6 +14,9 @@ class Sabotage : public AirsoftGame
 {
 public:
 	Sabotage(int, DisplayLcd&, DisplayLcdKeypad&);
+
+	// Inherited via AirsoftGame
+	virtual void startGame() override;
 };
 
 #endif
