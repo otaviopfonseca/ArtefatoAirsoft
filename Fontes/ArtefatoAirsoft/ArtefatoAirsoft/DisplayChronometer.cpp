@@ -94,6 +94,11 @@ void DisplayChronometer::printCurrentTime()
 	fillDigits(timeString);
 }
 
+CountDown DisplayChronometer::getTimer()
+{
+	return timer;
+}
+
 String DisplayChronometer::getTimeString(int minutes, int seconds, int miliseconds)
 {	
 	String strMinutes = "";

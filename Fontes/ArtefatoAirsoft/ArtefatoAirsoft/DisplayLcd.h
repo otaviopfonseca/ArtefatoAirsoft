@@ -39,6 +39,7 @@ public: //Métodos
 	void setCursorUp();
 	void setCursorDown();
 	void checkArrows(byte, byte);
+	void drawPorcent(byte porcent);
 };
 
 #endif

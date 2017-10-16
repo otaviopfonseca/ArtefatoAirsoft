@@ -28,6 +28,7 @@ public:
 	void setStartTime(int, int);
 	void reset();
 	void printCurrentTime();
+	CountDown getTimer();
 
 private: //methods
 	void turnBuzzerOn();

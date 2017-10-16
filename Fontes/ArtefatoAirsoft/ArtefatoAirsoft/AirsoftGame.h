@@ -14,6 +14,7 @@
 #include "DisplayLcdKeypad.h"
 #include "DisplayChronometer.h"
 #include "MembraneKeypad.h"
+#include "GameKeypad.h"
 
 class AirsoftGame {
 
@@ -26,6 +27,7 @@ protected:
 	bool usePassword;
 	CountDown gameTimer;
 	CountDown bombTimer;
+	CountDown armingTimer;
 	DisplayChronometer mainChronometer;
 	MembraneKeypad mainKeypad;
 	DisplayLcd& display;
@@ -33,15 +35,24 @@ protected:
 	int buzzerPin;
 	String password;
 	String passwordMirror;
+	static GameKeypad gameKeypad;
+	static bool armingOrDefusing;
+	static bool cancelling;
 	void startGameTimer();
 	void startBombTimer();
 	void printGameTimer();
 	void printBombTimer();
+	void setCode();
+	bool comparePassword();
+	void beep();
+	void beepError();
 	
 public:
 	AirsoftGame(int, DisplayLcd&, DisplayLcdKeypad&);
 	void configGame();
 	virtual void startGame() = 0;
+	static void armingDesarmingEvent(KeypadEvent key);
+	static void begin();
 
 private:
 	void configGameTime();
@@ -52,11 +63,8 @@ private:
 	void configPassword();
 	void setNewPass();
 	void setPass();
-	void setCode();
-	void beep();
-	bool comparePassword();
 	String getTimeString(int hours, int minutes, int seconds, int miliseconds);
-	void startGameCountdown();	
+	void startGameCountdown();
 };
 
 #endif

@@ -63,6 +63,9 @@
     <ClInclude Include="ArmDisarmKeypad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameKeypad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayLcd.cpp">
@@ -99,6 +102,9 @@
       <Filter>Source Files\GameModes</Filter>
     </ClCompile>
     <ClCompile Include="ArmDisarmKeypad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameKeypad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,6 +3,7 @@
  Created:	9/5/2017 1:39:00 PM
  Author:	DTI-Otavio
 */
+#include "GameKeypad.h"
 #include "ArmDisarmKeypad.h"
 #include "Domination.h"
 #include "Sabotage.h"
@@ -16,6 +17,7 @@
 #include "DisplayLcdKeypad.h"
 #include "DisplayLcd.h"
 #include "MembraneKeypad.h"
+#include "GameKeypad.h"
 #define DEBUG_SERIAL    1
 
 const int buzzerPin = 10;
@@ -24,6 +26,7 @@ DisplayLcdKeypad keypadLcd = DisplayLcdKeypad();
 DisplayChronometer chronometer = DisplayChronometer(buzzerPin);
 MembraneKeypad keyboard = MembraneKeypad();
 MainMenu startupMenu = MainMenu(buzzerPin, keypadLcd, lcd);
+GameKeypad gameKeypad = GameKeypad();
 
 // the setup function runs once when you press reset or power the board
 void setup() 
@@ -33,6 +36,7 @@ void setup()
 	lcd.print("ARTEFATO AIRSOFT");
 	lcd.setCursor(0, 1);
 	lcd.print("BY OTAVIO FONSECA");
+	AirsoftGame::begin();
 	delay(2000);
 }
 

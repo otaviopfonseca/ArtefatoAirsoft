@@ -125,3 +125,56 @@ void DisplayLcd::checkArrows(byte i, byte maxx)
 	}
 }
 
+void DisplayLcd::drawPorcent(byte porcent) {
+	//TODO: Optimize this code 
+	int aDibujar = (8 * porcent) / 10;
+	setCursor(0, 1);
+
+	if (aDibujar<5)
+	{
+		switch (aDibujar) {
+		case 0:
+			break;
+		case 1:
+			write((uint8_t)0);
+			break;
+		case 2:
+			write(1);
+			break;
+		case 3:
+			write(2);
+			break;
+		case 4:
+			write(3);
+			break;
+		}
+	}
+	while (aDibujar >= 5) 
+	{
+		if (aDibujar >= 5)
+		{
+			write(4);
+			aDibujar -= 5;
+		}
+		if (aDibujar<5)
+		{
+			switch (aDibujar) {
+			case 0:
+				break;
+			case 1:
+				write((uint8_t)0);
+				break;
+			case 2:
+				write(1);
+				break;
+			case 3:
+				write(2);
+				break;
+			case 4:
+				write(3);
+				break;
+			}
+		}
+	}
+}
+

@@ -6,6 +6,9 @@
 
 const unsigned int PASSWORD_SIZE = 8;
 const unsigned int COUNTDOWN_BEGIN = 5;
+bool AirsoftGame::armingOrDefusing = false;
+bool AirsoftGame::cancelling = false;
+GameKeypad AirsoftGame::gameKeypad = GameKeypad();
 
 void AirsoftGame::startGameTimer()
 {
@@ -14,6 +17,7 @@ void AirsoftGame::startGameTimer()
 
 void AirsoftGame::startBombTimer()
 {
+	mainChronometer.begin();
 	mainChronometer.setStartTime(bombMinutes, 0);
 	mainChronometer.start();
 }
@@ -21,25 +25,13 @@ void AirsoftGame::startBombTimer()
 void AirsoftGame::printGameTimer()
 {
 	long currentMilis = gameTimer.remaining();
-	Serial.println("Milis");
-	Serial.println(currentMilis);
 	long hours = (currentMilis / 6000000);
-	Serial.println("Horas");
-	Serial.println(hours);
 	long minutes = (currentMilis / 60000) % 60;
-	Serial.println("Minutos");
-	Serial.println(minutes);
 	long seconds = (currentMilis / 1000) % 60;
-	Serial.println("Segundos");
-	Serial.println(seconds);
-	Serial.println("Milisegundos");
 	long miliseconds = currentMilis % 1000;
-	Serial.println(miliseconds);
 	if (miliseconds < 100)
 		beep();
 	String timeString = getTimeString(hours, minutes, seconds, miliseconds);
-
-
 	if (gameTimer.remaining() > 0)
 	{
 		display.setCursor(3, 0);
@@ -78,6 +70,21 @@ String AirsoftGame::getTimeString(int hours, int minutes, int seconds, int milis
 
 void AirsoftGame::printBombTimer()
 {
+	long currentMilis = mainChronometer.getTimer().remaining();
+	long hours = (currentMilis / 6000000);
+	long minutes = (currentMilis / 60000) % 60;
+	long seconds = (currentMilis / 1000) % 60;
+	long miliseconds = currentMilis % 1000;
+	if (miliseconds < 100)
+		beep();
+	String timeString = getTimeString(hours, minutes, seconds, miliseconds);
+	if (mainChronometer.getTimer().remaining() > 0)
+	{
+		display.setCursor(3, 0);
+		display.print("DETONACAO EM");
+		display.setCursor(3, 1);
+		display.print(timeString);
+	}
 	mainChronometer.printCurrentTime();
 }
 
@@ -89,6 +96,7 @@ AirsoftGame::AirsoftGame(int _buzzerPin, DisplayLcd & _display, DisplayLcdKeypad
 	mainChronometer = DisplayChronometer(_buzzerPin);
 	mainKeypad = MembraneKeypad();
 	buzzerPin = _buzzerPin;
+	armingTimer = CountDown();
 }
 
 void AirsoftGame::configGame()
@@ -106,6 +114,46 @@ void AirsoftGame::configGame()
 	configPassword();
 	display.reset();
 	startGameCountdown();
+	gameKeypad.addEventListener(armingDesarmingEvent);
+}
+
+void AirsoftGame::armingDesarmingEvent(KeypadEvent key)
+{
+	KeyState state = gameKeypad.getState();
+	switch (state)
+	{	
+		case KeyState::RELEASED:
+		{
+			switch (key)
+			{
+			case GameKeypad::RED_BUTTON_TEAM:
+				armingOrDefusing = false;
+				break;
+			case GameKeypad::GREEN_BUTTON_TEAM:
+				cancelling = false;
+				break;
+			}
+		}
+		case KeyState::HOLD:
+		{
+			switch (key)
+			{
+			case GameKeypad::RED_BUTTON_TEAM:
+				armingOrDefusing = true;
+				break;
+			case GameKeypad::GREEN_BUTTON_TEAM:
+				cancelling = true;
+				break;
+			}
+		}
+		default:
+			break;
+	}
+}
+
+void AirsoftGame::begin()
+{
+	gameKeypad.addEventListener(armingDesarmingEvent);
 }
 
 void AirsoftGame::startGameCountdown()
@@ -406,7 +454,6 @@ void AirsoftGame::setPass() {
 		if(keyPressed != '\0')
 			cursorPosition++;
 	}
-	Serial.println(password);
 }
 
 void AirsoftGame::setCode() 
@@ -433,7 +480,6 @@ void AirsoftGame::setCode()
 		if (keyPressed != '\0')
 			cursorPosition++;
 	}
-	Serial.println(passwordMirror);
 }
 
 bool AirsoftGame::comparePassword()
@@ -444,6 +490,11 @@ bool AirsoftGame::comparePassword()
 void AirsoftGame::beep()
 {
 	tone(buzzerPin, 2400, 30);
+}
+
+void AirsoftGame::beepError()
+{
+	tone(buzzerPin, 100, 30);
 }
 
 
