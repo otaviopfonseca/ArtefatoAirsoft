@@ -6,8 +6,8 @@
 
 const unsigned int PASSWORD_SIZE = 8;
 const unsigned int COUNTDOWN_BEGIN = 5;
-bool AirsoftGame::armingOrDefusing = false;
-bool AirsoftGame::cancelling = false;
+bool AirsoftGame::arming = false;
+bool AirsoftGame::defusing = false;
 GameKeypad AirsoftGame::gameKeypad = GameKeypad();
 
 void AirsoftGame::startGameTimer()
@@ -120,35 +120,43 @@ void AirsoftGame::configGame()
 void AirsoftGame::armingDesarmingEvent(KeypadEvent key)
 {
 	KeyState state = gameKeypad.getState();
+	Serial.println(key);
 	switch (state)
 	{	
+		case KeyState::PRESSED:		
+			break;
+
 		case KeyState::RELEASED:
 		{
 			switch (key)
 			{
-			case GameKeypad::RED_BUTTON_TEAM:
-				armingOrDefusing = false;
-				break;
-			case GameKeypad::GREEN_BUTTON_TEAM:
-				cancelling = false;
-				break;
+				case GameKeypad::RED_BUTTON_TEAM:
+					arming = false;
+					break;
+				case GameKeypad::GREEN_BUTTON_TEAM:
+					defusing = false;
+					break;
 			}
 		}
+		break;
+
 		case KeyState::HOLD:
 		{
 			switch (key)
 			{
-			case GameKeypad::RED_BUTTON_TEAM:
-				armingOrDefusing = true;
-				break;
-			case GameKeypad::GREEN_BUTTON_TEAM:
-				cancelling = true;
-				break;
+				case GameKeypad::RED_BUTTON_TEAM:
+					arming = true;
+					break;
+				case GameKeypad::GREEN_BUTTON_TEAM:
+					defusing = true;
+					break;
 			}
 		}
-		default:
-			break;
+		break;
 	}
+	String armingOrDefusingStr = "ARMING DEFUSING: ";
+	armingOrDefusingStr += arming;
+	Serial.println(armingOrDefusingStr);
 }
 
 void AirsoftGame::begin()
@@ -495,6 +503,28 @@ void AirsoftGame::beep()
 void AirsoftGame::beepError()
 {
 	tone(buzzerPin, 100, 30);
+}
+
+void AirsoftGame::disarmedSplash()
+{
+	gameOver = true;
+	display.reset();
+	display.setCursor(2, 0);
+	lcd.print("BOMBA DESARMADA");
+	lcd.setCursor(3, 1);
+	lcd.print("VITORIA CONTRA TERROR");
+	delay(5000);
+}
+
+void AirsoftGame::explodeSplash()
+{
+	gameOver = true;
+	display.reset();
+	display.setCursor(2, 0);
+	lcd.print("BOMBA EXPLODIU");
+	lcd.setCursor(3, 1);
+	lcd.print("VITORIA TERRORISTA");
+	delay(5000);
 }
 
 

@@ -44,16 +44,15 @@ void SearchAndDestroy::search()
 			display.reset();
 		}
 
-		while (armingOrDefusing && !usePassword)
+		while (arming && !usePassword)
 		{			
 			display.reset();
 			display.setCursor(2, 0);
 			display.print("ARMANDO BOMBA");
 			display.setCursorDown();
 			unsigned int percent = 0;
-			unsigned long xTime = millis(); 
 			unsigned long timeCalcVar = 0;
-			while (armingOrDefusing)
+			while (arming)
 			{
 				if(!armingTimer.isRunning())
 					armingTimer.start(activateSeconds * 1000);
@@ -64,10 +63,6 @@ void SearchAndDestroy::search()
 				unsigned long seconds = armingTimer.remaining() / 1000;
 				percent = (((float)activateSeconds - (float)seconds) / ((float)activateSeconds) * 100.0);
 				display.drawPorcent(percent);
-				/*String remaining = "Segundos: ";
-				Serial.println(remaining += seconds);*/
-				/*String percentual = "Percentual: ";
-				Serial.println(percentual += percent);*/
 				if (percent >= 100)
 				{					
 					destroy();
@@ -75,22 +70,23 @@ void SearchAndDestroy::search()
 			}
 			display.reset();
 		}
+		if (gameOver)
+			return;
 	}
 }
 
 void SearchAndDestroy::destroy()
 {
+	arming = false;
+	defusing = false;
 	display.clear();
 	display.setCursor(3, 0);
 	display.print("BOMBA ARMADA");
 	delay(1000);
-	int minutos = bombMinutes - 1;
-	unsigned long iTime = millis();
-	unsigned long aTime;
-	int largoTono = 50;
 	gameTimer.stop();	
 	startBombTimer();
-	//MAIN LOOP
+	armingTimer.stop();
+	
 	while (true) 
 	{
 		printBombTimer();
@@ -105,56 +101,39 @@ void SearchAndDestroy::destroy()
 			display.print("DIGITE A SENHA");
 
 			setCode();
-			if (comparePassword()) {
-				//disarmedSplash(); TODO
-			}
+			if (comparePassword()) 
+				disarmedSplash();
+			
 			display.clear();
 			display.setCursor(3, 0);
 			display.print("SENHA INVALIDA");
 			display.reset();
 		}
 
-		if (armingOrDefusing && !usePassword)// disarming bomb
+		if (defusing && !usePassword)// disarming bomb
 		{
 			display.clear();
-			
 			display.setCursor(3, 0);
 			display.print("DESARMANDO");
 			display.setCursor(0, 1);
 			unsigned int percent = 0;
-			unsigned long xTime = millis();
-			//while (defuseando)
-			//{
-			//	keypad.getKey();
-			//	//check if game time runs out during the disabling
-			//	aTime = millis() - iTime;
-			//	if ((minutos - aTime / 60000 == 0 && 59 - ((aTime / 1000) % 60) == 0) || minutos - aTime / 60000>4000000000) {
-			//		endGame = true;
-			//	}
-			//	timeCalcVar = (millis() - xTime) % 1000;
-			//	if (timeCalcVar >= 0 && timeCalcVar <= 20)
-			//	{
-			//		digitalWrite(GREENLED, HIGH);
-			//		if (soundEnable)tone(tonepin, tonoAlarma1, 200);
-			//	}
-			//	if (timeCalcVar >= 480 && timeCalcVar <= 500)
-			//	{
-			//		if (soundEnable)tone(tonepin, tonoAlarma2, 200);
-			//		digitalWrite(GREENLED, LOW);
-			//	}
-			//	unsigned long seconds = (millis() - xTime);
-			//	percent = seconds / (ACTIVATESECONDS * 10);
-			//	drawPorcent(percent);
+			unsigned long timeCalcVar = 0;
+			while (defusing)
+			{
+				if (!armingTimer.isRunning())
+					armingTimer.start(activateSeconds * 1000);
 
-			//	//BOMB DISARMED GAME OVER
-			//	if (percent >= 100)
-			//	{
-			//		disarmedSplash();
-			//	}
-			//}
-			//digitalWrite(REDLED, LOW);
-			//digitalWrite(GREENLED, LOW);
-			//cls();
+				gameKeypad.getKey();
+				timeCalcVar = armingTimer.remaining();
+
+				unsigned long seconds = armingTimer.remaining() / 1000;
+				percent = (((float)activateSeconds - (float)seconds) / ((float)activateSeconds) * 100.0);
+				display.drawPorcent(percent);
+				if (percent >= 100)
+					disarmedSplash();
+			}
 		}
+		if (gameOver)
+			return;
 	}
 }

@@ -25,6 +25,7 @@ protected:
 	bool soundEnable;
 	bool mosfetEnable;
 	bool usePassword;
+	bool gameOver;
 	CountDown gameTimer;
 	CountDown bombTimer;
 	CountDown armingTimer;
@@ -36,8 +37,8 @@ protected:
 	String password;
 	String passwordMirror;
 	static GameKeypad gameKeypad;
-	static bool armingOrDefusing;
-	static bool cancelling;
+	static bool arming;
+	static bool defusing;
 	void startGameTimer();
 	void startBombTimer();
 	void printGameTimer();
@@ -46,6 +47,8 @@ protected:
 	bool comparePassword();
 	void beep();
 	void beepError();
+	void disarmedSplash();
+	void explodeSplash();
 	
 public:
 	AirsoftGame(int, DisplayLcd&, DisplayLcdKeypad&);
