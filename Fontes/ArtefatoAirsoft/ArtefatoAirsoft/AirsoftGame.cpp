@@ -527,4 +527,15 @@ void AirsoftGame::explodeSplash()
 	delay(5000);
 }
 
+void AirsoftGame::endSplash()
+{
+	gameOver = true;
+	display.reset();
+	display.setCursor(2, 0);
+	lcd.print("BOMBA DESARMADA");
+	lcd.setCursor(3, 1);
+	lcd.print("VITORIA CONTRA TERROR");
+	delay(5000);
+}
+
 

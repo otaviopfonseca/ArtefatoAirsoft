@@ -49,6 +49,7 @@ protected:
 	void beepError();
 	void disarmedSplash();
 	void explodeSplash();
+	void endSplash();
 	
 public:
 	AirsoftGame(int, DisplayLcd&, DisplayLcdKeypad&);
