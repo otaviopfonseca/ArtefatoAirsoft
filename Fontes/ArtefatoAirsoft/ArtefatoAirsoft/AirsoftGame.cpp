@@ -94,9 +94,10 @@ AirsoftGame::AirsoftGame(int _buzzerPin, DisplayLcd & _display, DisplayLcdKeypad
 	gameTimer = CountDown();
 	bombTimer = CountDown();
 	mainChronometer = DisplayChronometer(_buzzerPin);
-	mainKeypad = MembraneKeypad();
+	//mainKeypad = MembraneKeypad();
 	buzzerPin = _buzzerPin;
 	armingTimer = CountDown();
+	mainOneWireKeypad = new MembraneKeypadOneWire();
 }
 
 void AirsoftGame::configGame()
@@ -171,7 +172,7 @@ void AirsoftGame::startGameCountdown()
 	display.print("PRONTO P/ INICIAR");
 	display.setCursorDown();
 	display.print("PRES. ALGUM BOTAO");
-	mainKeypad.waitForKey();
+	mainOneWireKeypad->waitForKey();
 	display.reset();
 	display.setCursor(1, 0);
 	display.print("INICIANDO JOGO");
@@ -196,7 +197,7 @@ void AirsoftGame::configGameTime()
 	display.cursor();
 	display.blink();
 	display.setCursorDown();
-	byte cursorPosition = 0;
+	byte cursorPosition = 0;	
 	for (int indexTimeChar = 0; indexTimeChar<4; indexTimeChar++) 
 	{
 		while (true) 
@@ -205,14 +206,15 @@ void AirsoftGame::configGameTime()
 			{
 				display.print(":");
 				cursorPosition = 1;
-			}
-
-			byte buttonPressedValue = mainKeypad.getRealNumber();
+			}	
+			byte buttonPressedValue = mainOneWireKeypad->getRealNumber();
+			
 			if (buttonPressedValue != 11)
 			{
 				decompositeTime[indexTimeChar] = buttonPressedValue;
 				display.print(buttonPressedValue);
 				beep();
+				delay(300);
 				break;
 			}
 		}
@@ -254,12 +256,14 @@ void AirsoftGame::configBombTime()
 	{
 		while (true) 
 		{
-			byte buttonPressedValue = mainKeypad.getRealNumber();
+			//byte buttonPressedValue = mainKeypad.getRealNumber();
+			byte buttonPressedValue = mainOneWireKeypad->getRealNumber();
 			if (buttonPressedValue != 11)
 			{
 				decompositeTime[indexTimeChar] = buttonPressedValue;
-				display.print(buttonPressedValue);
+				display.print(buttonPressedValue);				
 				beep();
+				delay(300);
 				break;
 			}
 		}
@@ -303,12 +307,14 @@ void AirsoftGame::configActivateTime()
 	{
 		while (true) 
 		{
-			byte varu = mainKeypad.getRealNumber();
+			//byte varu = mainKeypad.getRealNumber();
+			byte varu = mainOneWireKeypad->getRealNumber();
 			if (varu != 11) 
 			{
 				decompositeTime[indexTimeChar] = varu;
 				display.print(varu); 
 				beep();
+				delay(300);
 				break;
 			}
 		}
@@ -346,7 +352,7 @@ void AirsoftGame::configSound()
 	char keyPressed = '\0';
 	while (true)
 	{
-		keyPressed = mainKeypad.getKeyPressed();
+		keyPressed = mainOneWireKeypad->getKeyPressed();
 		if (keyPressed == 'A') 
 		{
 			this->soundEnable = true;
@@ -359,8 +365,9 @@ void AirsoftGame::configSound()
 			this->soundEnable = false;
 			beep();
 			break;
-		}
+		}		
 	}
+	delay(300);
 }
 
 void AirsoftGame::configMosfet()
@@ -372,7 +379,7 @@ void AirsoftGame::configMosfet()
 	char keyPressed = '\0';
 	while (true)
 	{
-		keyPressed = mainKeypad.getKeyPressed();
+		keyPressed = mainOneWireKeypad->getKeyPressed();
 		if (keyPressed == 'A') 
 		{
 			this->mosfetEnable = true;
@@ -386,6 +393,7 @@ void AirsoftGame::configMosfet()
 			break;
 		}
 	}
+	delay(300);
 }
 
 void AirsoftGame::configPassword()
@@ -397,7 +405,7 @@ void AirsoftGame::configPassword()
 	char keyPressed = '\0';
 	while (true)
 	{
-		keyPressed = mainKeypad.getKeyPressed();
+		keyPressed = mainOneWireKeypad->getKeyPressed();
 		if (keyPressed == 'A') {
 			beep();
 			setNewPass();
@@ -411,6 +419,7 @@ void AirsoftGame::configPassword()
 		}
 	}
 	beep();
+	delay(300);
 }
 
 void AirsoftGame::setNewPass() 
@@ -446,7 +455,7 @@ void AirsoftGame::setPass() {
 	int cursorPosition = 0;
 	while (password.length() < PASSWORD_SIZE)
 	{
-		keyPressed = mainKeypad.getKeyPressed();
+		keyPressed = mainOneWireKeypad->getKeyPressed();
 		password += keyPressed;
 
 		if (cursorPosition != 0) {
@@ -461,6 +470,7 @@ void AirsoftGame::setPass() {
 		beep();
 		if(keyPressed != '\0')
 			cursorPosition++;
+		delay(300);
 	}
 }
 
@@ -472,7 +482,7 @@ void AirsoftGame::setCode()
 	int cursorPosition = 0;
 	while (passwordMirror.length() < PASSWORD_SIZE)
 	{
-		keyPressed = mainKeypad.getKeyPressed();
+		keyPressed = mainOneWireKeypad->getKeyPressed();
 		passwordMirror += keyPressed;
 		
 		if (passwordMirror != 0) {
@@ -487,6 +497,7 @@ void AirsoftGame::setCode()
 		beep();
 		if (keyPressed != '\0')
 			cursorPosition++;
+		delay(300);
 	}
 }
 
@@ -510,9 +521,9 @@ void AirsoftGame::disarmedSplash()
 	gameOver = true;
 	display.reset();
 	display.setCursor(2, 0);
-	lcd.print("BOMBA DESARMADA");
-	lcd.setCursor(3, 1);
-	lcd.print("VITORIA CONTRA TERROR");
+	display.print("BOMBA DESARMADA");
+	display.setCursor(3, 1);
+	display.print("VITORIA CONTRA TERROR");
 	delay(5000);
 }
 
@@ -521,9 +532,9 @@ void AirsoftGame::explodeSplash()
 	gameOver = true;
 	display.reset();
 	display.setCursor(2, 0);
-	lcd.print("BOMBA EXPLODIU");
-	lcd.setCursor(3, 1);
-	lcd.print("VITORIA TERRORISTA");
+	display.print("BOMBA EXPLODIU");
+	display.setCursor(3, 1);
+	display.print("VITORIA TERRORISTA");
 	delay(5000);
 }
 
@@ -532,9 +543,9 @@ void AirsoftGame::endSplash()
 	gameOver = true;
 	display.reset();
 	display.setCursor(2, 0);
-	lcd.print("BOMBA DESARMADA");
-	lcd.setCursor(3, 1);
-	lcd.print("VITORIA CONTRA TERROR");
+	display.print("BOMBA DESARMADA");
+	display.setCursor(3, 1);
+	display.print("VITORIA CONTRA TERROR");
 	delay(5000);
 }
 

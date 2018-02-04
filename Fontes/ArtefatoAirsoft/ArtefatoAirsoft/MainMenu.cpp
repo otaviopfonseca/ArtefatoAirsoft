@@ -47,7 +47,6 @@ AirsoftGame* MainMenu::getSelectedGame()
 			displayLcd.checkArrows(gameIndex, 2);
 			delay(50);
 		}
-
 		if (buttonPressed == DisplayLcdButton::Select)
 		{
 			tone(buzzerPin, 2400, 30);

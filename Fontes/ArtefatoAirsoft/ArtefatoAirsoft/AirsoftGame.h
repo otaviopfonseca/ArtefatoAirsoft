@@ -15,6 +15,7 @@
 #include "DisplayChronometer.h"
 #include "MembraneKeypad.h"
 #include "GameKeypad.h"
+#include "MembraneKeypadOneWire.h"
 
 class AirsoftGame {
 
@@ -30,7 +31,8 @@ protected:
 	CountDown bombTimer;
 	CountDown armingTimer;
 	DisplayChronometer mainChronometer;
-	MembraneKeypad mainKeypad;
+	//MembraneKeypad mainKeypad;
+	MembraneKeypadOneWire* mainOneWireKeypad;
 	DisplayLcd& display;
 	DisplayLcdKeypad& keypad;
 	int buzzerPin;

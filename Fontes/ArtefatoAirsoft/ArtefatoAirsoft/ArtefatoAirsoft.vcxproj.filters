@@ -66,6 +66,9 @@
     <ClInclude Include="GameKeypad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MembraneKeypadOneWire.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayLcd.cpp">
@@ -105,6 +108,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameKeypad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MembraneKeypadOneWire.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

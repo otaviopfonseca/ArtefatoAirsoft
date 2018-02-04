@@ -3,6 +3,7 @@
  Created:	9/5/2017 1:39:00 PM
  Author:	DTI-Otavio
 */
+#include "MembraneKeypadOneWire.h"
 #include "GameKeypad.h"
 #include "ArmDisarmKeypad.h"
 #include "Domination.h"
@@ -18,16 +19,15 @@
 #include "DisplayLcd.h"
 #include "MembraneKeypad.h"
 #include "GameKeypad.h"
+#include "MembraneKeypadOneWire.h"
 #define DEBUG_SERIAL    1
 
 const int buzzerPin = 10;
 DisplayLcd lcd = DisplayLcd();
 DisplayLcdKeypad keypadLcd = DisplayLcdKeypad();
 DisplayChronometer chronometer = DisplayChronometer(buzzerPin);
-MembraneKeypad keyboard = MembraneKeypad();
 MainMenu startupMenu = MainMenu(buzzerPin, keypadLcd, lcd);
 GameKeypad gameKeypad = GameKeypad();
-
 // the setup function runs once when you press reset or power the board
 void setup() 
 {		
